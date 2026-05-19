@@ -1,0 +1,75 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <div class="logo-section">
+        <h1>🐾 PetCare</h1>
+        <p>Sistema de Gestão Veterinária</p>
+      </div>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <div *ngIf="loginError" class="error-message">
+          {{ loginError }}
+        </div>
+
+        <mat-form-field class="full-width">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            type="email"
+            placeholder="seu@email.com"
+          />
+          <mat-error *ngIf="email.hasError('required')"
+            >Email é obrigatório</mat-error
+          >
+          <mat-error *ngIf="email.hasError('email')">Email inválido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>Senha</mat-label>
+          <input
+            matInput
+            formControlName="senha"
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Sua senha"
+          />
+          <button
+            mat-icon-button
+            matSuffix
+            (click)="showPassword = !showPassword"
+            type="button"
+          >
+            <mat-icon>{{
+              showPassword ? "visibility" : "visibility_off"
+            }}</mat-icon>
+          </button>
+          <mat-error *ngIf="senha.hasError('required')"
+            >Senha é obrigatória</mat-error
+          >
+          <mat-error *ngIf="senha.hasError('minlength')"
+            >Mínimo 6 caracteres</mat-error
+          >
+        </mat-form-field>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          class="full-width"
+          [disabled]="!loginForm.valid || isLoading"
+        >
+          <span *ngIf="!isLoading">Entrar</span>
+          <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+        </button>
+      </form>
+
+      <div class="demo-credentials">
+        <p>Credenciais de demonstração:</p>
+        <p><strong>Email:</strong> admin.teste@adm.com</p>
+        <p><strong>Senha:</strong> 12345</p>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

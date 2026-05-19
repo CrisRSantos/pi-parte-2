@@ -1,0 +1,130 @@
+<div class="agendamento-container">
+  <h1>Agendar Consulta</h1>
+
+  <mat-stepper linear #stepper>
+    <mat-step [stepControl]="petForm">
+      <form [formGroup]="petForm">
+        <ng-template matStepLabel>Selecione o Pet</ng-template>
+        <div class="step-content">
+          <p>Qual pet deseja agendar?</p>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Pet</mat-label>
+            <mat-select formControlName="pet_id">
+              <mat-option *ngFor="let pet of pets" [value]="pet.id">
+                {{ pet.nome }} - {{ pet.especie }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button matStepperNext color="primary">
+            Próximo
+          </button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="dataHoraForm">
+      <form [formGroup]="dataHoraForm">
+        <ng-template matStepLabel>Data e Hora</ng-template>
+        <div class="step-content">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Data da Consulta</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="data"
+              required
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Horário</mat-label>
+            <input matInput type="time" formControlName="hora" required />
+          </mat-form-field>
+
+          <div class="button-group">
+            <button mat-raised-button matStepperPrevious>Anterior</button>
+            <button mat-raised-button matStepperNext color="primary">
+              Próximo
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="consultaForm">
+      <form [formGroup]="consultaForm">
+        <ng-template matStepLabel>Informações da Consulta</ng-template>
+        <div class="step-content">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Tipo de Serviço</mat-label>
+            <mat-select formControlName="tipo_servico" required>
+              <mat-option value="consulta">Consulta Geral</mat-option>
+              <mat-option value="vacinacao">Vacinação</mat-option>
+              <mat-option value="exame">Exame</mat-option>
+              <mat-option value="cirurgia">Cirurgia</mat-option>
+              <mat-option value="limpeza">Limpeza de Dentes</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Descrição (opcional)</mat-label>
+            <textarea matInput formControlName="descricao" rows="4"></textarea>
+          </mat-form-field>
+
+          <div class="button-group">
+            <button mat-raised-button matStepperPrevious>Anterior</button>
+            <button mat-raised-button matStepperNext color="primary">
+              Próximo
+            </button>
+          </div>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Confirmação</ng-template>
+      <div class="step-content">
+        <mat-card class="confirmation-card">
+          <mat-card-content>
+            <h3>Confirme os detalhes do agendamento</h3>
+            <div class="confirmation-details">
+              <p><strong>Pet:</strong> {{ getSelectedPetName() }}</p>
+              <p>
+                <strong>Data:</strong>
+                {{ dataHoraForm.get("data")?.value | date: "dd/MM/yyyy" }}
+              </p>
+              <p>
+                <strong>Hora:</strong> {{ dataHoraForm.get("hora")?.value }}
+              </p>
+              <p>
+                <strong>Tipo de Serviço:</strong>
+                {{ consultaForm.get("tipo_servico")?.value }}
+              </p>
+              <p *ngIf="consultaForm.get('descricao')?.value">
+                <strong>Observações:</strong>
+                {{ consultaForm.get("descricao")?.value }}
+              </p>
+            </div>
+
+            <div class="button-group">
+              <button mat-raised-button matStepperPrevious>Anterior</button>
+              <button
+                mat-raised-button
+                color="accent"
+                (click)="confirmarAgendamento()"
+                [disabled]="isLoading"
+              >
+                {{ isLoading ? "Confirmando..." : "Confirmar Agendamento" }}
+              </button>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</div>

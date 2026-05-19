@@ -1,0 +1,48 @@
+.agendamento-container {
+  padding: 24px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+.agendamento-container h1 {
+  color: #333;
+  margin-bottom: 32px;
+}
+
+.step-content {
+  padding: 24px 0;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  justify-content: flex-end;
+}
+
+.confirmation-card {
+  background: white;
+  border-radius: 12px;
+}
+
+.confirmation-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.confirmation-details {
+  background-color: #f9f9f9;
+  padding: 16px;
+  border-radius: 8px;
+  margin: 16px 0;
+}
+
+.confirmation-details p {
+  margin: 8px 0;
+  color: #333;
+}

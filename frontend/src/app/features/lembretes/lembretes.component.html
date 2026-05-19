@@ -1,0 +1,100 @@
+<div class="lembretes-container">
+  <header class="page-header">
+    <h1>🔔 Lembretes de Vacinação</h1>
+    <p>Vacinações próximas do vencimento</p>
+  </header>
+
+  <div class="filters">
+    <button
+      mat-raised-button
+      [class.active]="filtro === 'todas'"
+      (click)="filtro = 'todas'"
+    >
+      Todas ({{ getCountByStatus("todas") }})
+    </button>
+    <button
+      mat-raised-button
+      [class.active]="filtro === 'critica'"
+      (click)="filtro = 'critica'"
+    >
+      Crítica ({{ getCountByStatus("critica") }})
+    </button>
+    <button
+      mat-raised-button
+      [class.active]="filtro === 'alta'"
+      (click)="filtro = 'alta'"
+    >
+      Alta ({{ getCountByStatus("alta") }})
+    </button>
+    <button
+      mat-raised-button
+      [class.active]="filtro === 'media'"
+      (click)="filtro = 'media'"
+    >
+      Média ({{ getCountByStatus("media") }})
+    </button>
+  </div>
+
+  <div class="lembretes-grid">
+    <mat-card
+      *ngFor="let lembrete of getFiltrados()"
+      class="lembrete-card"
+      [class]="'urgency-' + lembrete.urgencia"
+    >
+      <mat-card-header>
+        <div class="header-content">
+          <h3>{{ lembrete.pet_nome }}</h3>
+          <mat-chip-set>
+            <mat-chip [class]="'urgency-chip urgency-' + lembrete.urgencia">{{
+              lembrete.urgencia | uppercase
+            }}</mat-chip>
+          </mat-chip-set>
+        </div>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="vacina-info">
+          <h4>💉 {{ lembrete.vacina.nome }}</h4>
+          <p class="descricao">{{ lembrete.vacina.descricao }}</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <strong>Data Limite:</strong>
+            <span>{{ lembrete.data_proxima_dose | date: "dd/MM/yyyy" }}</span>
+          </div>
+          <div class="timeline-item">
+            <strong>Dias Restantes:</strong>
+            <span
+              class="days-left"
+              [class]="
+                'days-' + (lembrete.dias_faltantes < 0 ? 'vencido' : 'pendente')
+              "
+            >
+              {{
+                lembrete.dias_faltantes < 0
+                  ? "Vencido há " + Math.abs(lembrete.dias_faltantes) + " dias"
+                  : "Faltam " + lembrete.dias_faltantes + " dias"
+              }}
+            </span>
+          </div>
+        </div>
+
+        <mat-progress-bar
+          [value]="getProgressValue(lembrete)"
+          [color]="getProgressColor(lembrete)"
+        ></mat-progress-bar>
+
+        <button mat-raised-button color="primary" class="action-btn">
+          <mat-icon>event</mat-icon>
+          Agendar Vacinação
+        </button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div *ngIf="lembretes.length === 0" class="no-data">
+    <mat-icon>check_circle</mat-icon>
+    <p>Nenhum lembrete de vacinação pendente!</p>
+  </div>
+</div>

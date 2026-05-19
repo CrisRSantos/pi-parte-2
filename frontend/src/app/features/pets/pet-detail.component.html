@@ -1,0 +1,124 @@
+<div class="pet-detail-container" *ngIf="pet">
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  <div class="pet-header">
+    <div class="pet-avatar">{{ getPetEmoji() }}</div>
+    <div class="pet-info">
+      <h1>{{ pet.nome }}</h1>
+      <p class="pet-type">{{ pet.especie }} - {{ pet.raca }}</p>
+      <div class="pet-details">
+        <span>{{ pet.idade }} anos | {{ pet.peso }} kg | {{ pet.sexo }}</span>
+      </div>
+    </div>
+  </div>
+
+  <mat-card class="details-card">
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>info</mat-icon>
+          Informações
+        </ng-template>
+        <div class="tab-content">
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Espécie:</label>
+              <p>{{ pet.especie }}</p>
+            </div>
+            <div class="info-item">
+              <label>Raça:</label>
+              <p>{{ pet.raca }}</p>
+            </div>
+            <div class="info-item">
+              <label>Idade:</label>
+              <p>{{ pet.idade }} anos</p>
+            </div>
+            <div class="info-item">
+              <label>Peso:</label>
+              <p>{{ pet.peso }} kg</p>
+            </div>
+            <div class="info-item">
+              <label>Cor:</label>
+              <p>{{ pet.cor }}</p>
+            </div>
+            <div class="info-item">
+              <label>Sexo:</label>
+              <p>{{ pet.sexo }}</p>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>vaccines</mat-icon>
+          Vacinas
+        </ng-template>
+        <div class="tab-content">
+          <table mat-table [dataSource]="vacinas">
+            <ng-container matColumnDef="vacina">
+              <th mat-header-cell *matHeaderCellDef>Vacina</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.vacina.nome }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="data_aplicacao">
+              <th mat-header-cell *matHeaderCellDef>Data de Aplicação</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.data_aplicacao | date: "dd/MM/yyyy" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="proxima_dose">
+              <th mat-header-cell *matHeaderCellDef>Próxima Dose</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.data_proxima_dose | date: "dd/MM/yyyy" }}
+              </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let element">
+                <span [class]="'status status-' + element.status">{{
+                  element.status
+                }}</span>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="vacinaColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: vacinaColumns"></tr>
+          </table>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>medical_services</mat-icon>
+          Consultas
+        </ng-template>
+        <div class="tab-content">
+          <div class="consultas-list">
+            <mat-card *ngFor="let consulta of consultas" class="consulta-item">
+              <mat-card-content>
+                <h3>{{ consulta.descricao }}</h3>
+                <p>
+                  <strong>Data:</strong>
+                  {{ consulta.data_atendimento | date: "dd/MM/yyyy" }}
+                </p>
+                <p><strong>Diagnóstico:</strong> {{ consulta.diagnostico }}</p>
+                <p><strong>Tratamento:</strong> {{ consulta.tratamento }}</p>
+                <p *ngIf="consulta.proxima_consulta">
+                  <strong>Próxima:</strong>
+                  {{ consulta.proxima_consulta | date: "dd/MM/yyyy" }}
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card>
+</div>

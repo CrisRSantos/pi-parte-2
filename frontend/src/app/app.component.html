@@ -1,0 +1,51 @@
+<app-loading-spinner></app-loading-spinner>
+
+<mat-toolbar color="primary" class="app-toolbar" *ngIf="showLayout">
+  <button mat-icon-button (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="app-title">🐾 PetCare</span>
+  <span class="spacer"></span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <p mat-menu-item disabled>{{ getCurrentUserEmail() }}</p>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      <span>Sair</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
+
+<mat-sidenav-container class="app-container" *ngIf="showLayout">
+  <mat-sidenav #sidenav class="app-sidenav" [mode]="'side'" [opened]="true">
+    <nav class="sidenav-menu">
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </a>
+      <a mat-list-item routerLink="/pets" routerLinkActive="active">
+        <mat-icon>pets</mat-icon>
+        <span>Meus Pets</span>
+      </a>
+      <a mat-list-item routerLink="/agendamento" routerLinkActive="active">
+        <mat-icon>event</mat-icon>
+        <span>Agendar</span>
+      </a>
+      <a mat-list-item routerLink="/lembretes" routerLinkActive="active">
+        <mat-icon>notifications</mat-icon>
+        <span>Lembretes</span>
+      </a>
+    </nav>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="app-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div class="login-page-container" *ngIf="!showLayout">
+  <router-outlet></router-outlet>
+</div>

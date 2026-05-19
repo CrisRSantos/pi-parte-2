@@ -1,0 +1,89 @@
+.app-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.app-title {
+  margin-left: 16px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  display: flex;
+  height: calc(100vh - 64px);
+}
+
+.app-sidenav {
+  width: 250px;
+  border-right: 1px solid #ddd;
+  background: #f5f5f5;
+}
+
+.sidenav-menu {
+  padding: 8px 0;
+}
+
+.sidenav-menu a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  text-decoration: none;
+  color: #666;
+  border-left: 4px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.sidenav-menu a mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.sidenav-menu a:hover {
+  background-color: #e8e8e8;
+  color: #333;
+}
+
+.sidenav-menu a.active {
+  background-color: #e3f2fd;
+  color: #667eea;
+  border-left-color: #667eea;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+  .app-sidenav {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .app-toolbar {
+    padding: 0 8px;
+  }
+
+  .app-title {
+    margin-left: 8px;
+    font-size: 16px;
+  }
+}
+
+.login-page-container {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: #f4f6fb;
+}

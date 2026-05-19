@@ -1,0 +1,35 @@
+<div class="data-table-container">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th *ngFor="let column of columns">{{ column.label }}</th>
+        <th *ngIf="actions">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td *ngFor="let column of columns">{{ item[column.key] }}</td>
+        <td *ngIf="actions" class="actions">
+          <button mat-icon-button (click)="onEdit.emit(item)" title="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="onDelete.emit(item)"
+            title="Deletar"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <mat-paginator
+    *ngIf="paginator"
+    [length]="total"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="pageSizeOptions"
+    (page)="onPageChange.emit($event)"
+  ></mat-paginator>
+</div>
